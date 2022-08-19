@@ -4,7 +4,24 @@ const { format } = require('date-fns')
 //Reaction sub document for reactions
 const Reaction = new Schema(
     {
-        reactionId:
+        reactionId: {
+            type: Schema.Types.ObjectId(),
+            default: () => new Types.ObjectId()
+        },
+        reactionBody: {
+            type: String,
+            required: 'Must enter a reaction',
+            maxLength: 280
+        },
+        username: {
+            type: String,
+            required: 'Must have a username'
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: (createdAtTime) => format(createdAtTime, 'PPpp')
+        }
     }
 )
 
@@ -23,7 +40,7 @@ const Thought = new Schema({
   },
   username: {
     type: String,
-    required: true,
+    required: 'must have username',
   },
   reactions: [reactionSchema],
 
